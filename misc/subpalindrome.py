@@ -5,23 +5,21 @@ Genesis: https://forums.udacity.com/questions/100051766/using-a-heap-to-avoid-tr
 
 def find_longest_palindrome(s):
     "Return (i,j) such that s[i:j] is a longest palindrome in s."
-    i, j = 0, 0
+    mw, i, j = 0, 0, 0 // max_width, start, stop so far
     for max_width in range(len(s), 0, -1):
-        if max_width <= j - i:
+        if max_width <= mw: # stop when we can't possibly return a longer palindrome
             break
         # Check the candidate centers that on growing to max_width
         # would reach either the left or the right edge of s.
         for m in set([max_width, 2*len(s) - max_width]):
-            i1, j1 = grow(s, m // 2, (m + 1) // 2)
-            if j - i < j1 - i1:
-                i, j = i1, j1
+            mw, i, j = max((mw, i, j), grow(s, m//2, (m+1)//2)
     return i, j
 
 def grow(s, i, j):
-    "Return the slice-indices of the longest palindromic extension of palindrome s[i:j]."
+    "Return the length and slice-indices of the longest palindromic extension of palindrome s[i:j]."
     while 0 < i and j < len(s) and s[i-1].lower() == s[j].lower():
         i -= 1; j += 1
-    return i, j
+    return abs(i-j), i, j
 
 ## find_longest_palindrome('')
 #. (0, 0)
