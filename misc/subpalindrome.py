@@ -11,7 +11,7 @@ def find_longest_palindrome(s):
             break
         # Check the candidate centers that on growing to max_width
         # would reach either the left or the right edge of s.
-        for m in set([max_width, 2*len(s) - max_width]):
+        for m in [max_width, 2*len(s) - max_width]:
             mw, i, j = max((mw, i, j), grow(s, m//2, (m+1)//2)
     return i, j
 
